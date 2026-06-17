@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================================
+   Design tokens — Sistema 03 · Editorial / Data
+   El toggle de tema cambia [data-theme] en <html>; todas las variables
+   se recalculan y Tailwind las consume vía colors: var(--token).
+   ===================================================================== */
+:root,
+[data-theme='dark'] {
+  --bg: #0b0e16;
+  --surface: #11151f;
+  --surface-2: #161b28;
+  --text: #e8ecf5;
+  --muted: #828ca3;
+  --faint: #535b70;
+  --accent: #5b8cff;
+  --accent-ink: #06101f;
+  --line: #1d2434;
+  --grid: rgba(91, 140, 255, 0.06);
+}
+
+[data-theme='light'] {
+  --bg: #eef1f7;
+  --surface: #ffffff;
+  --surface-2: #e6ebf4;
+  --text: #0c1422;
+  --muted: #4a5168;
+  --faint: #7a8298;
+  --accent: #2f63e6;
+  --accent-ink: #ffffff;
+  --line: #d2d9e6;
+  --grid: rgba(47, 99, 230, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Sora', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Transición suave del set de colores al alternar el tema. */
+@media (prefers-reduced-motion: no-preference) {
+  body,
+  body * {
+    transition:
+      background-color 0.28s ease,
+      border-color 0.28s ease,
+      color 0.28s ease;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Patrón de puntos del fondo, fijo detrás del contenido. */
+.bg-dots {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(var(--grid) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+/* Glow de acento suave detrás del hero. */
+.hero-glow {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent), transparent 70%);
+  opacity: 0.12;
+  filter: blur(40px);
+}
+
+/* Scroll reveal: estado inicial oculto + transición al entrar en vista. */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Equalizer continuo para las barras del hero / mini-barras.
+   Oscila la altura con transform-origin abajo (mejor rendimiento). */
+@keyframes equalize {
+  0%,
+  100% {
+    transform: scaleY(0.5);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.bar-eq {
+  transform-origin: bottom;
+  animation: equalize var(--eq-dur, 1.6s) ease-in-out infinite;
+  animation-delay: var(--eq-delay, 0s);
+}
+
+/* Onda de opacidad para el heatmap (var --o = opacidad pico de la celda). */
+@keyframes heatwave {
+  0%,
+  100% {
+    opacity: calc(var(--o) * 0.35);
+  }
+  50% {
+    opacity: var(--o);
+  }
+}
+
+/* Rotación lenta para la dona. */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Respeta la preferencia de reducir movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

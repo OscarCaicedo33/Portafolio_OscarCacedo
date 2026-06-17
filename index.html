@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oscar Caicedo · Data Analyst & Especialista en Power BI</title>
+    <meta
+      name="description"
+      content="Portafolio de Oscar Caicedo — Data Analyst y Especialista en Power BI. 3+ años convirtiendo datos en decisiones de negocio."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    />
+    <script>
+      // Aplica el tema persistido antes de pintar para evitar el flash.
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'light' && t !== 'dark') t = 'dark';
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
